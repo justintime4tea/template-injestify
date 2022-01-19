@@ -21,6 +21,9 @@ for f in $(grep -lrn . -ie 'package-name' --exclude-dir=node_modules); do sed -i
 ### Update module alias under Windows
 It seems likely the easiest way to go about this is to use an IDE or "editor" such as VS Code. Performing "find and replace" from PowerShell for source code that may be editted on Linux or Unix based environments, in most examples I have found, results in file encoding changes in those files which have had strings replaced.
 
+## Pre-commit hooks (pre-flight checks)
+There are pre-commit hooks to ensure that style, linting, and tests are all in "good states" prior to a commit happening. This should however only apply to staged files meaning that if it was someone else who left a mess, you are only asked to cleanup your own. You can disable these entirely by removing the related configuration within .lintstagedrc.js.
+
 ## Building package-name
 To build package-name you can use either `yarn` or `npm` as follows:
 
