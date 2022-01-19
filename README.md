@@ -15,7 +15,7 @@ done
 
 ```.bash
 # Same as above but as a "one-liner"
-for f in $(grep -lrn . -ie 'package-name' --exclude-dir=node_modules); do sed -i 's package-name/name-of-your-package/g' "$f"; done
+for f in $(grep -lrn . -ie 'package-name' --exclude-dir=node_modules); do sed -i 's/package-name/name-of-your-package/g' "$f"; done
 ```
 
 ### Update module alias under Windows
