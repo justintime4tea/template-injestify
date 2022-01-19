@@ -1,29 +1,46 @@
-export type ErrorCallback = (err: Error, result?: any) => void;
+export type ErrorCallback = (err: Error, result?: unknown) => void;
 
-export async function delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+export async function delay(d: number) {
+  return new Promise((resolve) => setTimeout(resolve, d));
 }
 
-export function isFunction(x: any): x is Function {
-  return typeof x === 'function' || x instanceof Function;
+export function isObject(o: unknown): o is Record<string, unknown> {
+  return typeof o === 'object' && o !== null;
 }
 
-export function isNonNullPrimitive(x: any): x is NonNullPrimitive {
-  return x !== null && x !== undefined && NonNullPrimitives.includes(typeof x);
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function isFunction(f: unknown): f is Function {
+  return typeof f === 'function' || f instanceof Function;
 }
 
-export type NonNullPrimitive = 'string' | 'boolean' | 'number' | 'bigint' | 'symbol';
+export function isNonNullPrimitive(p: unknown): p is NonNullPrimitive {
+  return p !== null && p !== undefined && NonNullPrimitives.includes(typeof p);
+}
+
+export type NonNullPrimitive =
+  | 'string'
+  | 'boolean'
+  | 'number'
+  | 'bigint'
+  | 'symbol';
 export const NonNullPrimitives = [
-  'string', 'boolean', 'number', 'bigint', 'symbol'
-]
+  'string',
+  'boolean',
+  'number',
+  'bigint',
+  'symbol',
+];
 
 /**
  * A way of determining if a value contains only numbers.
  *
- * @param {any} value A value to check whether or not it is only numbers.
- * @returns {boolean} Whether or not the thing provided is entirely made of
+ * @param value A value to check whether or not it is only numbers.
+ * @returns Whether or not the thing provided is entirely made of
  * numbers.
  */
-export function isOnlyNumbers(x: any) {
-  return (isNonNullPrimitive(x) && typeof x === 'number') || (typeof x === 'string' && /^\d+$/.test(x));
+export function isOnlyNumbers(value: unknown): boolean {
+  return (
+    (isNonNullPrimitive(value) && typeof value === 'number') ||
+    (typeof value === 'string' && /^\d+$/.test(value))
+  );
 }

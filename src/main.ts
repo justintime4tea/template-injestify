@@ -1,14 +1,19 @@
-import { container, dependencies, TYPES } from "./ioc";
-import { isLogger, Logger } from "./logging";
+import { AsyncContainerModule, Container } from 'inversify';
 
-export class Main { 
-  public static async run() {
+import { TYPES } from '@package-name/ioc';
+import { isLogger, Logger } from '@package-name/logging';
+
+export class Main {
+  public static async run(
+    container: Container,
+    dependencies: AsyncContainerModule
+  ) {
     await container.loadAsync(dependencies);
 
     const logger: Logger = container.get(TYPES.Logger);
 
     if (isLogger(logger)) {
-      logger.debug('package-name::Main::run');
+      logger.debug('Starting package-name');
     }
   }
 }

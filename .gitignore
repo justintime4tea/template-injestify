@@ -3,6 +3,7 @@
 /build/
 .idea/*
 /docs/
+dist
 
 .DS_Store
 coverage

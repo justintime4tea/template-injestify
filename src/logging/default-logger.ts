@@ -1,43 +1,62 @@
-import { Logger } from "./logger";
+import { Logger, LogLevel } from '@package-name/logging';
 
 // tslint:disable: no-console
 export class DefaultLogger implements Logger {
-  public readonly level: number;
+  public readonly level: LogLevel;
   private readonly console: Console;
 
-  public constructor(level: number, console: Console) {
+  public constructor(level: LogLevel, console: Console) {
     this.level = level;
     this.console = console;
   }
 
-  public trace(...message: string[]): void {
-    if (this.level >= 6) {
-      this.console.trace(...message);
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  fatal(...msg: string[]): void;
+  fatal(...logAble: Record<string, unknown>[]): void;
+  fatal(...logAble: any[]): void {
+    if (this.level >= LogLevel.FATAL) {
+      this.console.log(...logAble);
     }
   }
-  public debug(...message: string[]): void {
-    if (this.level >= 5) {
-      this.console.debug(...message);
+
+  error(...msg: string[]): void;
+  error(...logAble: Record<string, unknown>[]): void;
+  error(...logAble: any[]): void {
+    if (this.level >= LogLevel.ERROR) {
+      this.console.error(...logAble);
     }
   }
-  public info(...message: string[]): void {
-    if (this.level >= 4) {
-      this.console.info(...message);
+
+  warn(...msg: string[]): void;
+  warn(...logAble: Record<string, unknown>[]): void;
+  warn(...logAble: any[]): void {
+    if (this.level >= LogLevel.WARN) {
+      this.console.warn(...logAble);
     }
   }
-  public warn(...message: string[]): void {
-    if (this.level >= 3) {
-      this.console.warn(...message);
+
+  info(...msg: string[]): void;
+  info(...logAble: Record<string, unknown>[]): void;
+  info(...logAble: any[]): void {
+    if (this.level >= LogLevel.INFO) {
+      this.console.info(...logAble);
     }
   }
-  public error(...message: string[]): void {
-    if (this.level >= 2) {
-      this.console.error(...message);
+
+  debug(...msg: string[]): void;
+  debug(...logAble: Record<string, unknown>[]): void;
+  debug(...logAble: any[]): void {
+    if (this.level >= LogLevel.DEBUG) {
+      this.console.debug(...logAble);
     }
   }
-  public fatal(...message: string[]): void {
-    if (this.level >= 1) {
-      this.console.log(...message);
+
+  trace(...msg: string[]): void;
+  trace(...logAble: Record<string, unknown>[]): void;
+  trace(...logAble: any[]): void {
+    if (this.level >= LogLevel.TRACE) {
+      this.console.trace(...logAble);
     }
   }
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 }
